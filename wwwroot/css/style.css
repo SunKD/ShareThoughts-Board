@@ -1,0 +1,28 @@
+.loginrow{
+    margin-top: 50px;
+}
+
+textarea {
+    width: 100%;
+}
+
+a:link,
+a:visited {
+    text-decoration: none;
+    color: white;
+}
+
+.welcome {
+    margin-right: 20px;
+}
+
+.float-right {
+    float: right;
+}
+
+.header {
+    margin-top: 20px;
+}
+.clearfix{
+    clear: both;
+}

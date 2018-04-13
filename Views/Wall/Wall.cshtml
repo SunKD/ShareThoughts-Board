@@ -1,0 +1,100 @@
+@using ShareThoughts.Models;
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l"
+        crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c"
+        crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="~/css/style.css"/> 
+    <title>Wall</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">CodingDojo Wall</a>
+            </div>
+            <div class=" navbar-right">
+                <a href="#" class="welcome">
+                    <i class="fas fa-user-circle"></i> Welcome, @TempData["user"]!</a>
+                <a href="Index">
+                    <i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+    </nav>
+    <div class="container">
+        <form action="PostMessage" method="POST">
+            <div class="row header">
+                <h3>Post a message</h3>
+            </div>
+            <div class="row">
+                <label>Message</label>
+                <textarea name="Message" rows="4" cols="100%"></textarea>
+            </div>
+            <br>
+            <div class="row float-right">
+                <input type="submit" value ="Post a message" class="btn btn-primary">
+            </div>
+        </form>
+
+        @{
+            foreach (var item in @ViewBag.Message){
+                <div class="row">
+                    <div class="col-12">
+                        <h5>@item["name"] 
+                        @item["created_at"]</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <p>@item["message"]</p>
+                    </div>
+                </div>
+                foreach (var cmt in @ViewBag.Comment){
+                    if(@item["message_id"] == @cmt["messages_id"]){
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-11">
+                            <h6>@cmt["name"] - @cmt["created_at"]</h6>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-11">
+                            <p>@cmt["comment"]</p>
+                        </div>
+                    </div>
+                    }
+            }
+            
+        <form action='PostComment' method="POST">
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-11">
+                    <h5>Post a comment</h5>
+                    <label>Comment</label>
+                    <textarea name="Comment" rows="3" cols="100%"></textarea>
+                </div>
+            </div>
+            <div class="row float-right">
+                <input type="hidden" value =@item["message_id"] name ="msgid">
+                <input type="submit" value ="Post a comment" class="btn btn-primary">
+            </div>
+            <div class="clearfix"></div>
+            <br>
+            <br>
+        </form>
+        }
+    }
+    </div>
+</body>
+
+</html>
